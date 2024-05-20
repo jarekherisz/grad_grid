@@ -1,7 +1,9 @@
 class GradColumn extends HTMLElement {
+
+    isInitialized = false;
+
     constructor() {
         super();
-
     }
 
     static get observedAttributes() {
@@ -22,18 +24,20 @@ class GradColumn extends HTMLElement {
             this.dataHeaderLabel = this.textContent.trim();
         }
 
-        this.render();
+        this.innerHTML = ``;
+        //this.isInitialized = true;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this.render();
+        if (oldValue !== newValue && this.isInitialized) {
+            this.dispatchEvent(new CustomEvent('column-updated', {
+                detail: { name, oldValue, newValue },
+                bubbles: true,
+                composed: true
+            }));
         }
     }
 
-    render() {
-        this.innerHTML = ``;
-    }
 
 
     get id() {

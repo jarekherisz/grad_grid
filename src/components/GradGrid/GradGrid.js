@@ -1,4 +1,10 @@
 class GradGrid extends HTMLElement {
+
+    container;
+    containerTable;
+
+    table;
+
     constructor() {
         super();
         this.columns = [];
@@ -6,12 +12,41 @@ class GradGrid extends HTMLElement {
     }
 
     connectedCallback() {
-        this.initColumns();
+        console.log('Connected callback');
         this.render();
     }
 
-    render() {
+    disconnectedCallback() {
+        this.observer.disconnect();
+        this.removeEventListener('column-updated', this.handleColumnUpdated.bind(this));
+    }
 
+    render() {
+        this.initContainer();
+        this.initTable();
+        this.initColumns();
+    }
+
+    initContainer () {
+        if(this.container === undefined) {
+            this.container = document.createElement('div');
+            this.container.classList.add('grad-grid-container');
+            this.appendChild(this.container);
+        }
+
+        if(this.containerTable === undefined) {
+            this.containerTable = document.createElement('div');
+            this.containerTable.classList.add('grad-grid-table-container');
+            this.container.appendChild(this.containerTable);
+        }
+    }
+
+    initTable () {
+        if(this.table === undefined) {
+            this.table = document.createElement('table');
+            this.table.classList.add('grad-grid-table');
+            this.containerTable.appendChild(this.table);
+        }
     }
 
 
@@ -20,19 +55,16 @@ class GradGrid extends HTMLElement {
     }
 
     updateColumns() {
-        this.columns = Array.from(this.querySelectorAll('grad-column'));
-        console.log('Columns updated:', this.columns);
+        console.log('Update columns');
+
+        const th = document.createElement('th');
+        th.textContent = 'Header';
+        this.table.appendChild(th);
+
+
+
         this.columns.forEach(column => {
-            console.log('Column attributes:', {
-                id: column.id,
-                dataHeaderLabel: column.dataHeaderLabel,
-                dataHeaderClass: column.dataHeaderClass,
-                dataHeaderStyle: column.dataHeaderStyle,
-                dataCellStyle: column.dataCellStyle,
-                dataCellClass: column.dataCellClass,
-                dataFooterStyle: column.dataFooterStyle,
-                dataFooterClass: column.dataFooterClass,
-            });
+            console.log('Column:', column);
         });
     }
 }
