@@ -1,3 +1,5 @@
+import GradGrid from "../GradGrid/GradGrid";
+
 class GradColumn extends HTMLElement {
 
     isInitialized = false;
@@ -20,6 +22,10 @@ class GradColumn extends HTMLElement {
     }
 
     connectedCallback() {
+        if (!(this.parentElement instanceof GradGrid)) {
+            throw new TypeError(`Invalid parent element: Expected this.parentElement to be an instance of GradGrid, but got ${this.parentElement?.constructor?.name || 'undefined'} instead.`);
+        }
+
         if (!this.hasAttribute('data-header-label')) {
             this.dataHeaderLabel = this.textContent.trim();
         }
