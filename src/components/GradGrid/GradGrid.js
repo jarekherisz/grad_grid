@@ -1,3 +1,5 @@
+import GradColumn from "../GradColumn/GradColumn";
+
 class GradGrid extends HTMLElement {
 
     container;
@@ -8,7 +10,6 @@ class GradGrid extends HTMLElement {
     constructor() {
         super();
         this.columns = [];
-        this.observer = new MutationObserver(this.updateColumns.bind(this));
     }
 
     connectedCallback() {
@@ -18,13 +19,11 @@ class GradGrid extends HTMLElement {
 
     disconnectedCallback() {
         this.observer.disconnect();
-        this.removeEventListener('column-updated', this.handleColumnUpdated.bind(this));
     }
 
     render() {
         this.initContainer();
         this.initTable();
-        this.initColumns();
     }
 
     initContainer () {
@@ -50,11 +49,20 @@ class GradGrid extends HTMLElement {
     }
 
 
-    initColumns() {
-        this.observer.observe(this, { childList: true, subtree: true });
+    /**
+     * @param {GradColumn} column - Obiekt kolumny.
+     * @returns {void}
+     */
+    initColumn(column) {
+        if (!(column instanceof GradColumn)) {
+            throw new TypeError('Argument must be an instance of GradColumn');
+        }
+        column.isInitialized = true;
     }
 
-    updateColumns() {
+
+
+    updateColumn() {
         console.log('Update columns');
 
         const th = document.createElement('th');
