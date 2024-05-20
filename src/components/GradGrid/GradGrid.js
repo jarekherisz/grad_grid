@@ -15,6 +15,18 @@ class GradGrid extends HTMLElement {
     connectedCallback() {
         console.log('Connected callback');
         this.render();
+
+        let observer = new MutationObserver(function(mutations) {
+            console.log('Mutations:', mutations);
+            mutations.forEach(function(mutation) {
+                console.log('Mutation:', mutation.target);
+                if (mutation.target instanceof GradColumn) {
+                    console.log('Column 000000',);
+                }
+            });
+        })
+
+        observer.observe(this, { childList: true, subtree: true });
     }
 
     disconnectedCallback() {
