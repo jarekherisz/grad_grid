@@ -1,0 +1,22 @@
+{
+  "name": "GradGrid",
+  "version": "1.0.0",
+  "description": "A project setup for GradGrid using Webpack",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "webpack serve --open --config webpack.config.js",
+    "build": "webpack --config webpack.config.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.1",
+    "babel-loader": "^8.2.2",
+    "glob": "^10.3.15",
+    "html-webpack-plugin": "^5.3.1",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
