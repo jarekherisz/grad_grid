@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv environment variables file
+.env
+
+# PHPStorm
+.idea/
+*.iml
+
