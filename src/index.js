@@ -1,7 +1,5 @@
-import GradGrid from './GradGrid';
+import GradGrid from './components/GradGrid/GradGrid.js';
+import GradColumn from './components/GradColumn/GradColumn.js';
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('[data-toggle="grad-grid"]').forEach(function(el) {
-        new GradGrid(el, el.dataset);
-    });
-});
+customElements.define('grad-grid', GradGrid);
+customElements.define('grad-column', GradColumn);
