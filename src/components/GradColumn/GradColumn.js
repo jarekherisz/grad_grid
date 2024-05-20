@@ -25,9 +25,6 @@ class GradColumn extends HTMLElement {
         }
 
         this.innerHTML = ``;
-        console.log("connectedCallback column");
-       this.parentElement.initColumn(this);
-
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
