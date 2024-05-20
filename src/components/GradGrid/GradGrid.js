@@ -21,7 +21,8 @@ class GradGrid extends HTMLElement {
             mutations.forEach(function(mutation) {
                 console.log('Mutation:', mutation.target);
                 if (mutation.target instanceof GradColumn) {
-                    console.log('Column 000000',);
+
+                    console.log('Column 000000', mutation.target.dataHeaderLabel);
                 }
             });
         })
