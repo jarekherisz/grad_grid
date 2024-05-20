@@ -1,7 +1,15 @@
 import GradGrid from "../GradGrid/GradGrid";
 
+/**
+ * Represents a column in a GradGrid.
+ * @extends HTMLElement
+ */
 class GradColumn extends HTMLElement {
 
+    /**
+     * Indicates whether the column is initialized.
+     * @type {boolean}
+     */
     isInitialized = false;
 
     constructor() {
