@@ -12,6 +12,8 @@ class GradColumn extends HTMLElement {
      */
     isInitialized = false;
 
+    th;
+
     constructor() {
         super();
     }
@@ -39,6 +41,8 @@ class GradColumn extends HTMLElement {
         }
 
         this.innerHTML = ``;
+
+        this.isInitialized = true;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -49,6 +53,18 @@ class GradColumn extends HTMLElement {
                 composed: true
             }));
         }
+    }
+
+    renderHeaderCell() {
+        if(this.th === undefined) {
+            this.th = document.createElement('th');
+        }
+
+        this.th.textContent = this.dataHeaderLabel;
+        this.th.className = this.dataHeaderClass;
+        this.th.style = this.dataHeaderStyle;
+
+        return this.th;
     }
 
 
