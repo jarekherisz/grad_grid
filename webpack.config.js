@@ -21,7 +21,7 @@ const htmlPlugins = generateHtmlPlugins('./examples');
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'bundle.js',
+    filename: 'grad-grid.js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
