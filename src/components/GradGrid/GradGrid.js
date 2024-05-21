@@ -21,19 +21,21 @@ class GradGrid extends HTMLElement {
             console.log("mutationObserver start", mutationList);
 
             mutationList.forEach(mutation => {
+
                 mutation.removedNodes.forEach(node => {
                     if (node instanceof GradColumn) {
                         this.removeColumn(node);
                     }
                 });
 
-                mutationList.forEach(mutation => {
-                        mutation.addedNodes.forEach(node => {
-                            if (node instanceof GradColumn) {
-                                this.initColumn(node);
-                            }
-                        });
+
+                mutation.addedNodes.forEach(node => {
+                    if (node instanceof GradColumn) {
+                        console.log('Inicialize', node);
+                        this.initColumn(node);
+                    }
                 });
+
 
             });
         };
