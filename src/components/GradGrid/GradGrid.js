@@ -34,7 +34,7 @@ class GradGrid extends HTMLElement {
                             }
                         });
                 });
-                
+
             });
         };
 
@@ -44,7 +44,7 @@ class GradGrid extends HTMLElement {
 
         for (let i = 0; i < this.children.length; i++) {
             if (this.children[i].tagName.toLowerCase() === 'grad-column') {
-                this.children[i].addEventListener('init-column', (event) => {
+                this.children[i].addEventListener('column-init', (event) => {
                     this.initColumn(event.detail.column);
                 });
             }
@@ -112,7 +112,9 @@ class GradGrid extends HTMLElement {
             if (this.getColumnById(column.id) === undefined) {
                 this.columns.push(column);
 
-                column.addEventListener('column-updated', this.updateColumn);
+                column.addEventListener('column-changed', (event) => {
+                    this.updateColumn(event.detail.column, event.detail.attributeName, event.detail.oldValue, event.detail.newValue);
+                });
 
                 let th = column.renderHeaderCell();
                 this.theadRow.appendChild(th);
@@ -138,12 +140,13 @@ class GradGrid extends HTMLElement {
 
 
     /**
-     * @param event
      * @returns {void}
+     * @param column
+     * @param attributeName
+     * @param oldValue
+     * @param newValue
      */
-    updateColumn(event) {
-        const { column, attributeName, oldValue, newValue } = event.detail;
-
+    updateColumn(column, attributeName, oldValue, newValue) {
         column.renderHeaderCell();
     }
 
