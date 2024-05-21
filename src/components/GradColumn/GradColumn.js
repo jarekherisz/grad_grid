@@ -43,15 +43,36 @@ class GradColumn extends HTMLElement {
         this.innerHTML = ``;
 
         this.isInitialized = true;
+
+        this.dispatchEvent(new CustomEvent('init-column', {
+            detail: {column: this},
+            bubbles: true,
+            composed: true
+        }));
+
     }
 
+    disconnectedCallback() {
+        console.log('GradColumn disconnected callback');
+    }
+
+    /**
+     * Responds to changes in the element's attributes and dispatches a custom event if the attribute's new value is different from its old value and the element is initialized.
+     * This method is a part of the custom elements lifecycle and is automatically called by the browser when an attribute listed in `observedAttributes` changes.
+     *
+     * @param {string} name - The name of the attribute that has changed.
+     * @param {string} oldValue - The previous value of the attribute before the change.
+     * @param {string} newValue - The current value of the attribute after the change.
+     */
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue && this.isInitialized) {
-
-            this.renderHeaderCell();
-
             this.dispatchEvent(new CustomEvent('column-updated', {
-                detail: { name, oldValue, newValue },
+                detail: {
+                    column: this,
+                    attributeName: name,
+                    oldValue: oldValue,
+                    newValue: newValue
+                },
                 bubbles: true,
                 composed: true
             }));
