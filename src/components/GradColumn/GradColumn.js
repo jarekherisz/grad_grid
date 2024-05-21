@@ -47,6 +47,9 @@ class GradColumn extends HTMLElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue && this.isInitialized) {
+
+            this.renderHeaderCell();
+
             this.dispatchEvent(new CustomEvent('column-updated', {
                 detail: { name, oldValue, newValue },
                 bubbles: true,
@@ -60,9 +63,14 @@ class GradColumn extends HTMLElement {
             this.th = document.createElement('th');
         }
 
+        if(this.dataHeaderClass !== null)
+            this.th.className = this.dataHeaderClass;
+
+        if(this.dataHeaderStyle !== null)
+            this.th.style = this.dataHeaderStyle;
+
+        this.th.setAttribute('data-id', this.id);
         this.th.textContent = this.dataHeaderLabel;
-        this.th.className = this.dataHeaderClass;
-        this.th.style = this.dataHeaderStyle;
 
         return this.th;
     }
