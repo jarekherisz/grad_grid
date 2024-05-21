@@ -5,7 +5,7 @@ class GradGrid extends HTMLElement {
     container;
     containerTable;
 
-    table;
+    table; thead; theadRow;
 
     constructor() {
         super();
@@ -16,22 +16,19 @@ class GradGrid extends HTMLElement {
         console.log('Connected callback');
         this.render();
 
-        let observer = new MutationObserver(function(mutations) {
-            console.log('Mutations:', mutations);
-            mutations.forEach(function(mutation) {
-                console.log('Mutation:', mutation.target);
+        const mutationObserver = (mutationList, observer) => {
+            for(const mutation of mutationList) {
                 if (mutation.target instanceof GradColumn) {
-
-                    console.log('Column 000000', mutation.target.dataHeaderLabel);
+                    this.initColumn(mutation.target);
                 }
-            });
-        })
-
-        observer.observe(this, { childList: true, subtree: true });
+            }
+        };
+        this.mutationObserver = new MutationObserver(mutationObserver);
+        this.mutationObserver.observe(this, { childList: true, subtree: true });
     }
 
     disconnectedCallback() {
-        this.observer.disconnect();
+        this.mutationObserver.disconnect();
     }
 
     render() {
@@ -53,37 +50,64 @@ class GradGrid extends HTMLElement {
         }
     }
 
+    getColumnById(id) {
+        return this.columns.find(column => column.id === id);
+    }
+
     initTable () {
-        if(this.table === undefined) {
+        if (this.table === undefined) {
             this.table = document.createElement('table');
             this.table.classList.add('grad-grid-table');
             this.containerTable.appendChild(this.table);
         }
+
+        if (this.thead === undefined) {
+            this.thead = document.createElement('thead');
+            this.table.appendChild(this.thead);
+        }
+
+        if(this.theadRow === undefined) {
+            this.theadRow = document.createElement('tr');
+            this.thead.appendChild(this.theadRow);
+        }
+
     }
+
 
 
     /**
      * @param {GradColumn} column - Obiekt kolumny.
      * @returns {void}
      */
-    initColumn(column) {
+    initColumn (column) {
         if (!(column instanceof GradColumn)) {
             throw new TypeError('Argument must be an instance of GradColumn');
         }
-        column.isInitialized = true;
+
+        if (column.isInitialized) {
+            if(this.getColumnById(column.id) === undefined) {
+                this.columns.push(column);
+
+                let th = column.renderHeaderCell();
+                this.theadRow.appendChild(th);
+            }
+        }
     }
 
 
 
-    updateColumn() {
+    /**
+     * @param {GradColumn} column - Obiekt kolumny.
+     * @returns {void}
+     */
+    updateColumn(column) {
         console.log('Update columns');
 
         const th = document.createElement('th');
         th.textContent = 'Header';
         this.table.appendChild(th);
 
-
-
+        
         this.columns.forEach(column => {
             console.log('Column:', column);
         });
