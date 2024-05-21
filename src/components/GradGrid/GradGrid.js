@@ -83,6 +83,7 @@ class GradGrid extends HTMLElement {
         if (this.table === undefined) {
             this.table = document.createElement('table');
             this.table.classList.add('grad-grid-table');
+            this.table.border = 1;
             this.containerTable.appendChild(this.table);
         }
 
