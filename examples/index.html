@@ -11,4 +11,28 @@
   <grad-column id="test2" >Ppppp</grad-column>
 </grad-grid>
 </body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Tutaj możesz umieścić swój kod, który chcesz wykonać po załadowaniu dokumentu.
+    console.log('Dokument jest gotowy!');
+
+    const grid = document.querySelector('grad-grid');
+    const column = grid.getColumnById('test');
+
+    const column2 = document.createElement('grad-column');
+    column2.id = 'test3';
+    column2.dataHeaderLabel = 'Nowa sadasdasdasd';
+    grid.appendChild(column2);
+
+    column.dataHeaderLabel = 'Nowa nazwa';
+
+    console.log(column);
+
+    //grid.removeChild(column);
+
+    //grid.removeColumn(column);
+  });
+</script>
+
 </html>
