@@ -44,7 +44,7 @@ class GradColumn extends HTMLElement {
 
         this.isInitialized = true;
 
-        this.dispatchEvent(new CustomEvent('init-column', {
+        this.dispatchEvent(new CustomEvent('column-init', {
             detail: {column: this},
             bubbles: true,
             composed: true
@@ -66,7 +66,7 @@ class GradColumn extends HTMLElement {
      */
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue && this.isInitialized) {
-            this.dispatchEvent(new CustomEvent('column-updated', {
+            this.dispatchEvent(new CustomEvent('column-changed', {
                 detail: {
                     column: this,
                     attributeName: name,
