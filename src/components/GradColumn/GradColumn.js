@@ -92,6 +92,7 @@ class GradColumn extends HTMLElement {
 
         this.th.setAttribute('data-id', this.id);
         this.th.textContent = this.dataHeaderLabel;
+        this.th.draggable = true;
 
         return this.th;
     }
