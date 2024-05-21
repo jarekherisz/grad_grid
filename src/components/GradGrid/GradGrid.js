@@ -5,7 +5,9 @@ class GradGrid extends HTMLElement {
     container;
     containerTable;
 
-    table; thead; theadRow;
+    table;
+    thead;
+    theadRow;
 
     constructor() {
         super();
@@ -13,18 +15,19 @@ class GradGrid extends HTMLElement {
     }
 
     connectedCallback() {
-        console.log('Connected callback');
+        console.log('GradGrid connected callback');
         this.render();
 
         const mutationObserver = (mutationList, observer) => {
-            for(const mutation of mutationList) {
+            console.log('Mutation observer 11111111111');
+            for (const mutation of mutationList) {
                 if (mutation.target instanceof GradColumn) {
                     this.initColumn(mutation.target);
                 }
             }
         };
         this.mutationObserver = new MutationObserver(mutationObserver);
-        this.mutationObserver.observe(this, { childList: true, subtree: true });
+        this.mutationObserver.observe(this, {childList: true, subtree: true});
     }
 
     disconnectedCallback() {
@@ -36,14 +39,14 @@ class GradGrid extends HTMLElement {
         this.initTable();
     }
 
-    initContainer () {
-        if(this.container === undefined) {
+    initContainer() {
+        if (this.container === undefined) {
             this.container = document.createElement('div');
             this.container.classList.add('grad-grid-container');
             this.appendChild(this.container);
         }
 
-        if(this.containerTable === undefined) {
+        if (this.containerTable === undefined) {
             this.containerTable = document.createElement('div');
             this.containerTable.classList.add('grad-grid-table-container');
             this.container.appendChild(this.containerTable);
@@ -54,7 +57,7 @@ class GradGrid extends HTMLElement {
         return this.columns.find(column => column.id === id);
     }
 
-    initTable () {
+    initTable() {
         if (this.table === undefined) {
             this.table = document.createElement('table');
             this.table.classList.add('grad-grid-table');
@@ -66,7 +69,7 @@ class GradGrid extends HTMLElement {
             this.table.appendChild(this.thead);
         }
 
-        if(this.theadRow === undefined) {
+        if (this.theadRow === undefined) {
             this.theadRow = document.createElement('tr');
             this.thead.appendChild(this.theadRow);
         }
@@ -74,18 +77,17 @@ class GradGrid extends HTMLElement {
     }
 
 
-
     /**
      * @param {GradColumn} column - Obiekt kolumny.
      * @returns {void}
      */
-    initColumn (column) {
+    initColumn(column) {
         if (!(column instanceof GradColumn)) {
             throw new TypeError('Argument must be an instance of GradColumn');
         }
 
         if (column.isInitialized) {
-            if(this.getColumnById(column.id) === undefined) {
+            if (this.getColumnById(column.id) === undefined) {
                 this.columns.push(column);
 
                 let th = column.renderHeaderCell();
@@ -95,22 +97,12 @@ class GradGrid extends HTMLElement {
     }
 
 
-
     /**
      * @param {GradColumn} column - Obiekt kolumny.
      * @returns {void}
      */
     updateColumn(column) {
         console.log('Update columns');
-
-        const th = document.createElement('th');
-        th.textContent = 'Header';
-        this.table.appendChild(th);
-
-        
-        this.columns.forEach(column => {
-            console.log('Column:', column);
-        });
     }
 }
 
