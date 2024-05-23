@@ -57,8 +57,11 @@ export default class GradTable  {
             let columnIndex = 0
             tr.querySelectorAll('th').forEach((th, j) => {
                 let colspan = parseInt(th.getAttribute('colspan'), 10) || 1;
+                let dataField = th.getAttribute('data-field')
 
-                headerCells[columnIndex] = th;
+                if (dataField !== null && dataField !== "") {
+                    headerCells[columnIndex] = th;
+                }
                 columnIndex += colspan;
             })
         });
