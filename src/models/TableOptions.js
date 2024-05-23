@@ -1,7 +1,11 @@
+import * as console from "node:console";
+
 /**
  * Class representing the options for a table.
  */
-class TableOptions {
+export class TableOptions {
+
+
     /**
      * Create TableOptions.
      * @param {Object} options - The configuration options.
@@ -12,7 +16,7 @@ class TableOptions {
         this.pageSize = 10;
         this.pagination = false;
         this.debug = true;
-        this.headerStyle = null;
+        this._headerStyle = null;
         this.headerClass = null;
         this.bodyStyle = null;
         this.bodyClass = null;
@@ -137,5 +141,3 @@ class TableOptions {
         this._pagination = value;
     }
 }
-
-export default TableOptions;
