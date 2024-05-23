@@ -4,7 +4,9 @@ import {TableConfig} from "./ConfigClasses/TableConfig";
 
 export default class GradTable  {
 
-    constructor(table, tableConfig = {}) {
+    _columns = [];
+
+    constructor(table, tableConfig = {}, columnConfig = {}) {
 
         if (typeof table !== 'object') {
             throw new Error("The first argument must be an object representing the table.");
@@ -14,7 +16,7 @@ export default class GradTable  {
         this._table = table;
         // Create a deep copy of the table object to preserve its initial state.
         // This copy can be used to restore the initial state or to compare changes.
-        this._table = JSON.parse(JSON.stringify(table));
+        this._tableCopy = table.cloneNode(true);
 
         this.initConfig(tableConfig);
 
@@ -26,22 +28,43 @@ export default class GradTable  {
 
         // Setting log level based on debug option
         log.debug('GradTable initialized with tableConfig:', this._config);
+
+         this.initColumns(columnConfig);
     }
 
     initConfig(tableConfig = {}) {
 
 
         // Map HTML data attributes to tableOptions using DataAttributesMapper
-        const htmlOptions = DataAttributesMapper.map(this._table);
+        const htmlConfig = DataAttributesMapper.map(this._table);
 
         // If tableOptions is not an instance of TableOptions, create a new TableOptions object
         if (!(tableConfig instanceof TableConfig)) {
-            this._config = new TableConfig(tableConfig);
+            this._config = new TableConfig({...tableConfig, ...htmlConfig});
+        }else {
+            // Merging HTML tableOptions with user-provided tableOptions
+            this._config.setConfig(htmlConfig);
         }
+    }
 
+    initColumns(columnConfig = {}) {
 
-        // Merging HTML tableOptions with user-provided tableOptions
-        this._config.setConfig(htmlOptions);
+        let thead = this._table.querySelector('thead');
+        let headerCells  = []
+
+        let rowspan="2"
+        thead.querySelectorAll('tr').forEach((tr, i) => {
+            let columnIndex = 0
+            tr.querySelectorAll('th').forEach((th, j) => {
+                let colspan = parseInt(th.getAttribute('colspan'), 10) || 1;
+
+                headerCells[columnIndex] = th;
+                columnIndex += colspan;
+            })
+        });
+
+        console.log(headerCells);
+
     }
 
     setTableConfig(tableConfig = {}) {
