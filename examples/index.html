@@ -20,7 +20,10 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const table = new GradTable(document.querySelector('table'));
+
+    const table = new GradTable(document.querySelector('table'), {
+      pageList: [11, 22, 33, 44, 55]
+    });
   });
 </script>
 </body>

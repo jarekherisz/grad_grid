@@ -1,5 +1,5 @@
 /**
- * Class responsible for mapping HTML data attributes to options.
+ * Class responsible for mapping HTML data attributes to ConfigClasses.
  */
 export class DataAttributesMapper {
     /**
@@ -32,9 +32,9 @@ export class DataAttributesMapper {
     }
 
     /**
-     * Maps HTML data attributes to an options object.
+     * Maps HTML data attributes to an ConfigClasses object.
      * @param {HTMLElement} element - The HTML element to extract data attributes from.
-     * @return {Object} The mapped options.
+     * @return {Object} The mapped ConfigClasses.
      */
     static map(element) {
         const dataset = element.dataset;

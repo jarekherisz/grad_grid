@@ -1,51 +1,70 @@
 import log from 'loglevel';
-import {TableOptions} from "./models/TableOptions";
-import {DataAttributesMapper} from "./utils/DataAttributesMapper";
+import {DataAttributesMapper} from "./Utils/DataAttributesMapper";
+import {TableConfig} from "./ConfigClasses/TableConfig";
 
-export default class GradTable {
-    /**
-     * Create a GradTable.
-     * @param {Object} table - The table object representing the HTML table element.
-     * @param {Object} [tableOptions={}] - The configuration tableOptions.
-     * @throws Will throw an error if the first argument is not an object.
-     */
-    constructor(table, tableOptions = {}) {
+export default class GradTable  {
+
+    constructor(table, tableConfig = {}) {
+
         if (typeof table !== 'object') {
             throw new Error("The first argument must be an object representing the table.");
         }
 
         // Store the table object.
-        this.table = table;
+        this._table = table;
         // Create a deep copy of the table object to preserve its initial state.
         // This copy can be used to restore the initial state or to compare changes.
-        this._table = JSON.parse(JSON.stringify(this.table));
+        this._table = JSON.parse(JSON.stringify(table));
 
+        this.initConfig(tableConfig);
 
-        this.initTableOptions(tableOptions);
-
-
-        if (this.tableOptions.debug) {
+         if (this._config.debug) {
             log.setLevel('debug');
-        } else {
+         } else {
             log.setLevel('silent');
         }
 
         // Setting log level based on debug option
-        log.debug('GradTable initialized with tableOptions:', this.tableOptions);
+        log.debug('GradTable initialized with tableConfig:', this._config);
     }
 
-    initTableOptions(tableOptions = {}) {
+    initConfig(tableConfig = {}) {
+
+
         // Map HTML data attributes to tableOptions using DataAttributesMapper
-        const htmlOptions = DataAttributesMapper.map(this.table);
+        const htmlOptions = DataAttributesMapper.map(this._table);
 
         // If tableOptions is not an instance of TableOptions, create a new TableOptions object
-        if (!(tableOptions instanceof TableOptions)) {
-            this.tableOptions = new TableOptions(tableOptions);
+        if (!(tableConfig instanceof TableConfig)) {
+            this._config = new TableConfig(tableConfig);
         }
 
+
         // Merging HTML tableOptions with user-provided tableOptions
-        this.tableOptions.setOptions(htmlOptions);
+        this._config.setConfig(htmlOptions);
     }
+
+    setTableConfig(tableConfig = {}) {
+        this._config.setConfig(tableConfig);
+    }
+
+    get pageList() {
+        return this._config.pageList;
+    }
+
+    set pageList(value) {
+        this._config.pageList = value;
+    }
+
+    get pageNumber() {
+        return this._config.pageNumber;
+    }
+
+    set pageNumber(value) {
+        this._config.pageNumber = value;
+    }
+
+
 
 
 }
