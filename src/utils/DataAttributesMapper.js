@@ -1,7 +1,7 @@
 /**
  * Class responsible for mapping HTML data attributes to options.
  */
-class DataAttributesMapper {
+export class DataAttributesMapper {
     /**
      * Converts kebab-case to camelCase.
      * @param {string} str - The kebab-case string.
@@ -50,5 +50,3 @@ class DataAttributesMapper {
         return options;
     }
 }
-
-export default DataAttributesMapper;
