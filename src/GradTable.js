@@ -1,8 +1,8 @@
 import log from 'loglevel';
-import TableOptions from "./models/TableOptions";
-import DataAttributesMapper from "./utils/DataAttributesMapper";
+import {TableOptions} from "./models/TableOptions";
+import {DataAttributesMapper} from "./utils/DataAttributesMapper";
 
-class GradTable {
+export default class GradTable {
     /**
      * Create a GradTable.
      * @param {Object} table - The table object representing the HTML table element.
@@ -14,14 +14,14 @@ class GradTable {
             throw new Error("The first argument must be an object representing the table.");
         }
 
-
-        log.setLevel('debug');
-
+        // Store the table object.
         this.table = table;
+        // Create a deep copy of the table object to preserve its initial state.
+        // This copy can be used to restore the initial state or to compare changes.
         this._table = JSON.parse(JSON.stringify(this.table));
 
 
-       this.initTableOptions(tableOptions);
+        this.initTableOptions(tableOptions);
 
 
         if (this.tableOptions.debug) {
@@ -34,7 +34,7 @@ class GradTable {
         log.debug('GradTable initialized with tableOptions:', this.tableOptions);
     }
 
-    initTableOptions (tableOptions = {}) {
+    initTableOptions(tableOptions = {}) {
         // Map HTML data attributes to tableOptions using DataAttributesMapper
         const htmlOptions = DataAttributesMapper.map(this.table);
 
@@ -48,7 +48,4 @@ class GradTable {
     }
 
 
-
 }
-
-export default GradTable;
