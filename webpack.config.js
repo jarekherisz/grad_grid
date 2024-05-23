@@ -12,6 +12,7 @@ function generateHtmlPlugins(templateDir) {
       filename: `${name}.html`,
       template: item,
       inject: 'body',
+      scriptLoading: 'defer',
     });
   });
 }
@@ -21,7 +22,7 @@ const htmlPlugins = generateHtmlPlugins('./examples');
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'grad-grid.js',
+    filename: 'grad-table.js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {

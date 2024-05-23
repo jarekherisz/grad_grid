@@ -6,34 +6,22 @@
   <title>GradGrid Example</title>
 </head>
 <body>
-<grad-grid>
-  <grad-column id="test" data-header-style="ddddddd">Nazwa</grad-column>
-  <grad-column id="test2" >Ppppp</grad-column>
-</grad-grid>
-</body>
+<table border="1"
+       data-page-list="[11,22,33,44,55]"
+      >
+  <thead>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+  </thead>
+</table>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Tutaj możesz umieścić swój kod, który chcesz wykonać po załadowaniu dokumentu.
-    console.log('Dokument jest gotowy!');
-
-    const grid = document.querySelector('grad-grid');
-    const column = grid.getColumnById('test');
-
-    const column2 = document.createElement('grad-column');
-    column2.id = 'test3';
-    column2.dataHeaderLabel = 'Nowa sadasdasdasd';
-    grid.appendChild(column2);
-
-
-    column.dataHeaderLabel = 'Nowa nazwa';
-
-    console.log(column);
-
-    //grid.removeChild(column);
-
-    //grid.removeColumn(column);
+    const table = new GradTable(document.querySelector('table'));
   });
 </script>
-
+</body>
 </html>

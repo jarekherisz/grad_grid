@@ -1,5 +1,5 @@
-import GradGrid from './components/GradGrid/GradGrid.js';
-import GradColumn from './components/GradColumn/GradColumn.js';
+import GradTable from './GradTable.js';
 
-customElements.define('grad-grid', GradGrid);
-customElements.define('grad-column', GradColumn);
+
+// Ekspozycja klasy globalnie
+window.GradTable = GradTable;
